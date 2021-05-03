@@ -138,4 +138,22 @@ public class QuerydslTest {
         assertThat(result3.get(0).getEffenddtm(), is("99991231235959"));
     }
 
+    @Test
+    public void term_prod() {
+        prodRepository.save(new Prod("70000", "99991231235959", "20210503090000", "NA00001600", "20210503", "99991231"));
+        prodRepository.save(new Prod("70000", "99991231235959", "20210503090000", "NA00002500", "20210503", "99991231"));
+
+        List<Prod> result = prodRepositorySupport.findBySvcmgmtnumProdid("70000","99991231235959","20210503090000","NA00001600");
+
+        assertThat(result.size(), is(1));
+
+        Prod prod = result.get(0);
+
+        prod.TermProd("20210503220000","20210503");
+
+        assertThat(result.size(), is(1));
+        assertThat(result.get(0).getEffenddtm(), is("99991231235959"));
+    }
+
 }
+

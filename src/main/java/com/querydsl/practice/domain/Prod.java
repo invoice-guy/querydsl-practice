@@ -30,7 +30,7 @@ public class Prod {
     private String scrbdt;
     private String termdt;
 
-
+/* PK를 여러개 지정하기 위한 기법 */
     @EqualsAndHashCode
     @Embeddable
     static class ProdKey implements Serializable {
@@ -46,6 +46,11 @@ public class Prod {
         this.effstadtm = effstadtm;
         this.prodid = prodid;
         this.scrbdt = scrbdt;
+        this.termdt = termdt;
+    }
+
+    public void TermProd(String effenddtm, String termdt) {
+        this.effenddtm = effenddtm;
         this.termdt = termdt;
     }
 }

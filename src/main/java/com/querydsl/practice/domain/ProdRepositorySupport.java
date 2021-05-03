@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-import static com.querydsl.practice.domain.QCust.cust;
 import static com.querydsl.practice.domain.QProd.prod;
 import static com.querydsl.practice.domain.QSvc.svc;
 
@@ -28,6 +27,7 @@ public class ProdRepositorySupport extends QuerydslRepositorySupport {
                 .fetch();
     }
 
+    //Projections이 머지??
     public List<SvcProd> findProdBySvcnum(String svcnum) {
         return queryFactory.select(Projections.fields(SvcProd.class,svc.svcnum,prod.svcmgmtnum,prod.effenddtm,prod.effstadtm,prod.prodid,prod.scrbdt,prod.termdt))
                 .from(prod)
@@ -36,4 +36,12 @@ public class ProdRepositorySupport extends QuerydslRepositorySupport {
                 .fetch();
     }
 
+    public List<Prod> findBySvcmgmtnumProdid(String svcmgmtnum, String effenddtm, String effstadtm, String prodid)  {
+        return queryFactory.selectFrom(prod)
+                .where(prod.svcmgmtnum.eq(svcmgmtnum),
+                        prod.effenddtm.eq(effenddtm),
+                        prod.effstadtm.eq(effstadtm),
+                        prod.prodid.eq(prodid))
+                .fetch();
+    }
 }
