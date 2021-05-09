@@ -19,9 +19,9 @@ public class QSvc extends EntityPathBase<Svc> {
 
     public static final QSvc svc = new QSvc("svc");
 
-    public final StringPath custnum = createString("custnum");
+    public final NumberPath<Integer> custnum = createNumber("custnum", Integer.class);
 
-    public final StringPath svcmgmtnum = createString("svcmgmtnum");
+    public final NumberPath<Integer> id = createNumber("id", Integer.class);
 
     public final StringPath svcnum = createString("svcnum");
 

@@ -1,46 +1,62 @@
 package com.querydsl.practice.domain;
 
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Embeddable;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.IdClass;
+import javax.persistence.*;
 import java.io.Serializable;
 
+//@IdClass(Prod.ProdKey.class)
 @Getter
 @NoArgsConstructor
 @Entity
-@IdClass(Prod.ProdKey.class)
+@Table(
+        /*
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = {"svc_mgmt_num", "prod_id", "eff_sta_dtm", "eff_end_dtm"})
+        },*/
+        name = "prod",
+        indexes = {
+                @Index(name = "prod_n1",
+                        columnList = "svcmgmtnum, prodid, effenddtm desc, effstadtm desc",
+                        unique = true)
+        }
+)
 public class Prod {
     @Id
-    private String svcmgmtnum;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
-    @Id
+    private int svcmgmtnum;
+
+//    @Id
     private String effenddtm;
 
-    @Id
+//    @Id
     private String effstadtm;
 
-    @Id
+//    @Id
     private String prodid;
 
     private String scrbdt;
     private String termdt;
 
 /* PK를 여러개 지정하기 위한 기법 */
-    @EqualsAndHashCode
+/*    @EqualsAndHashCode
     @Embeddable
     static class ProdKey implements Serializable {
-        private String svcmgmtnum;
+        private int svcmgmtnum;
         private String effenddtm;
         private String effstadtm;
         private String prodid;
     }
+*/
 
-    public Prod(String svcmgmtnum, String effenddtm, String effstadtm, String prodid, String scrbdt, String termdt) {
+
+    @Builder
+    public Prod(int svcmgmtnum, String effenddtm, String effstadtm, String prodid, String scrbdt, String termdt) {
         this.svcmgmtnum = svcmgmtnum;
         this.effenddtm = effenddtm;
         this.effstadtm = effstadtm;
@@ -53,4 +69,5 @@ public class Prod {
         this.effenddtm = effenddtm;
         this.termdt = termdt;
     }
+
 }

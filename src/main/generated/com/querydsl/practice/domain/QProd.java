@@ -23,11 +23,13 @@ public class QProd extends EntityPathBase<Prod> {
 
     public final StringPath effstadtm = createString("effstadtm");
 
+    public final NumberPath<Integer> id = createNumber("id", Integer.class);
+
     public final StringPath prodid = createString("prodid");
 
     public final StringPath scrbdt = createString("scrbdt");
 
-    public final StringPath svcmgmtnum = createString("svcmgmtnum");
+    public final NumberPath<Integer> svcmgmtnum = createNumber("svcmgmtnum", Integer.class);
 
     public final StringPath termdt = createString("termdt");
 

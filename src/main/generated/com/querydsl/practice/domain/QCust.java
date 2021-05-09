@@ -21,7 +21,7 @@ public class QCust extends EntityPathBase<Cust> {
 
     public final StringPath custnm = createString("custnm");
 
-    public final StringPath custnum = createString("custnum");
+    public final NumberPath<Integer> id = createNumber("id", Integer.class);
 
     public QCust(String variable) {
         super(Cust.class, forVariable(variable));

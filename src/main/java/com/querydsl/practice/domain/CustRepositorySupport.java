@@ -17,11 +17,12 @@ public class CustRepositorySupport extends QuerydslRepositorySupport {
         this.queryFactory = queryFactory;
     }
 
+/*
     public List<Cust> findByCustnm(String custnum) {
         return queryFactory.selectFrom(cust)
                 .where(cust.custnum.eq(custnum))
                 .fetch();
     }
-
+*/
 }
 

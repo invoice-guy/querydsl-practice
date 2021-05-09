@@ -1,8 +1,9 @@
 package com.querydsl.practice.domain;
 
-import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
-import com.querydsl.practice.dto.SvcProd;
+import com.querydsl.core.types.Projections;
+import com.querydsl.practice.dto.ProdTermRequestDto;
+import com.querydsl.practice.dto.SvcProdResponseDto;
 import org.springframework.data.jpa.repository.support.QuerydslRepositorySupport;
 import org.springframework.stereotype.Repository;
 
@@ -10,7 +11,6 @@ import java.util.List;
 
 import static com.querydsl.practice.domain.QProd.prod;
 import static com.querydsl.practice.domain.QSvc.svc;
-
 
 @Repository
 public class ProdRepositorySupport extends QuerydslRepositorySupport {
@@ -21,27 +21,29 @@ public class ProdRepositorySupport extends QuerydslRepositorySupport {
         this.queryFactory = queryFactory;
     }
 
-    public List<Prod> findProdBySvcmgmtnum(String svcmgmtnum) {
-        return queryFactory.selectFrom(prod)
-                .where(prod.svcmgmtnum.eq(svcmgmtnum))
-                .fetch();
-    }
-
     //Projections이 머지??
-    public List<SvcProd> findProdBySvcnum(String svcnum) {
-        return queryFactory.select(Projections.fields(SvcProd.class,svc.svcnum,prod.svcmgmtnum,prod.effenddtm,prod.effstadtm,prod.prodid,prod.scrbdt,prod.termdt))
+    public List<SvcProdResponseDto> findAllProdBySvcnum(String svcnum) {
+        return queryFactory.select(Projections.fields(SvcProdResponseDto.class,svc.svcnum,prod.svcmgmtnum,prod.effenddtm,prod.effstadtm,prod.prodid,prod.scrbdt,prod.termdt))
                 .from(prod)
-                .join(svc).on(prod.svcmgmtnum.eq(svc.svcmgmtnum))
+                .join(svc).on(prod.svcmgmtnum.eq(svc.id))
                 .where(svc.svcnum.eq(svcnum))
                 .fetch();
     }
 
-    public List<Prod> findBySvcmgmtnumProdid(String svcmgmtnum, String effenddtm, String effstadtm, String prodid)  {
-        return queryFactory.selectFrom(prod)
-                .where(prod.svcmgmtnum.eq(svcmgmtnum),
-                        prod.effenddtm.eq(effenddtm),
-                        prod.effstadtm.eq(effstadtm),
-                        prod.prodid.eq(prodid))
+    public List<SvcProdResponseDto> findActiveProdBySvcmgmtnum(int svcmgmtnum) {
+        return queryFactory.select(Projections.fields(SvcProdResponseDto.class,prod.svcmgmtnum,prod.effenddtm,prod.effstadtm,prod.prodid,prod.scrbdt,prod.termdt))
+                .from(prod)
+                .where(prod.svcmgmtnum.eq(svcmgmtnum),prod.effenddtm.eq("99991231235959"))
                 .fetch();
     }
+
+    public Prod findProdByPk(ProdTermRequestDto requestDto) {
+        return queryFactory.selectFrom(prod)
+                .where(prod.svcmgmtnum.eq(requestDto.getSvcmgmtnum()),
+                        prod.effenddtm.eq(requestDto.getEffenddtm()),
+                        prod.effstadtm.eq(requestDto.getEffstadtm()),
+                        prod.prodid.eq(requestDto.getProdid()))
+                .fetchOne();
+    }
+
 }

@@ -5,7 +5,12 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class SvcCust {
+public class SvcCustResponseDto {
+    private int svcmgmtnum;
     private String svcnum;
     private String custnm;
+    private String svcstcd;
+    private String svcscrbdt;
+    private String svctermdt;
+    private int custnum;
 }

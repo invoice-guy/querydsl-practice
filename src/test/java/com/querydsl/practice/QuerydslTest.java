@@ -2,9 +2,6 @@ package com.querydsl.practice;
 
 import com.querydsl.practice.domain.*;
 
-import com.querydsl.practice.dto.SvcCust;
-import com.querydsl.practice.dto.SvcProd;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,9 +9,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.CoreMatchers.is;
-
-import java.util.Arrays;
-import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -37,6 +31,7 @@ public class QuerydslTest {
     @Autowired
     private ProdRepositorySupport prodRepositorySupport;
 
+/*
     @Test
     public void select_svcmgmtnum_by_svcnum() {
         //String svcmgmtnum = "701243";
@@ -97,7 +92,7 @@ public class QuerydslTest {
     }
 
     @Test
-    public void insert_prod_by_svcnum() {
+    public void select_prod_by_svcnum() {
         svcRepository.saveAll(Arrays.asList(
                 new Svc("70000","01028268646","80000"),
                 new Svc("70001","01010005134","80001"),
@@ -152,8 +147,10 @@ public class QuerydslTest {
         prod.TermProd("20210503220000","20210503");
 
         assertThat(result.size(), is(1));
-        assertThat(result.get(0).getEffenddtm(), is("99991231235959"));
+        assertThat(result.get(0).getEffenddtm(), is("20210503220000"));
     }
+
+ */
 
 }
 

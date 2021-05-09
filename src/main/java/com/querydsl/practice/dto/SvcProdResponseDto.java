@@ -5,9 +5,9 @@ import lombok.NoArgsConstructor;
 
 @Getter
 @NoArgsConstructor
-public class SvcProd {
+public class SvcProdResponseDto {
     private String svcnum;
-    private String svcmgmtnum;
+    private int svcmgmtnum;
     private String effenddtm;
     private String effstadtm;
     private String prodid;

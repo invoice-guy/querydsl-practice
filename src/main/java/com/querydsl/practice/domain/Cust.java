@@ -4,21 +4,23 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Getter
 @NoArgsConstructor
 @Entity
 public class Cust {
     @Id
-    private String custnum;
+    @Column(name = "custnum")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
 
     private String custnm;
 
-    public Cust(String custnum, String custnm) {
-        this.custnum = custnum;
+    @Builder
+    public Cust(String custnm) {
         this.custnm = custnm;
     }
+
 
 }
